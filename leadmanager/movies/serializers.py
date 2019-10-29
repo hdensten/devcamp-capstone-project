@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from leads.models import Lead
+from movies.models import Lead
 
 # Lead Serializer
 
