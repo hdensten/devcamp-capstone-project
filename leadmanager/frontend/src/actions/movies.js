@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createMessage } from "./messages";
+import { createMessage, returnErrors } from "./messages";
 
 import { GET_MOVIES, DELETE_MOVIE, ADD_MOVIE, GET_ERRORS } from "./types";
 
@@ -13,7 +13,9 @@ export const getMovies = () => dispatch => {
         payload: res.data
       });
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
 // DELETE MOVIE
@@ -41,15 +43,7 @@ export const addMovie = movie => dispatch => {
         payload: res.data
       });
     })
-    .catch(err => {
-      const errors = {
-        msg: err.response.data,
-        status: err.response.status
-      };
-      console.log(err.response.data);
-      dispatch({
-        type: GET_ERRORS,
-        payload: errors
-      });
-    });
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
