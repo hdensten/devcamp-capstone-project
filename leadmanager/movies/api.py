@@ -1,13 +1,13 @@
-from movies.models import Lead
+from movies.models import Movie
 from rest_framework import viewsets, permissions
-from .serializers import LeadSerializer
+from .serializers import MovieSerializer
 
-# Lead Viewset
+# Movie Viewset
 
 
-class LeadViewSet(viewsets.ModelViewSet):
-    queryset = Lead.objects.all()
+class MovieViewSet(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
     permission_classes = [
         permissions.AllowAny
     ]
-    serializer_class = LeadSerializer
+    serializer_class = MovieSerializer

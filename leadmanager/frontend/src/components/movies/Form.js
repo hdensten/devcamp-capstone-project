@@ -21,6 +21,11 @@ export class Form extends Component {
     const { name, email, message } = this.state;
     const movie = { name, email, message };
     this.props.addMovie(movie);
+    this.setState({
+      name: "",
+      email: "",
+      message: ""
+    });
   };
 
   render() {

@@ -1,6 +1,7 @@
 import axios from "axios";
+import { createMessage } from "./messages";
 
-import { GET_MOVIES, DELETE_MOVIE, ADD_MOVIE } from "./types";
+import { GET_MOVIES, DELETE_MOVIE, ADD_MOVIE, GET_ERRORS } from "./types";
 
 // GET MOVIES
 export const getMovies = () => dispatch => {
@@ -20,6 +21,7 @@ export const deleteMovie = id => dispatch => {
   axios
     .delete(`/api/movies/${id}/`)
     .then(res => {
+      dispatch(createMessage({ deleteMovie: "Movie Deleted" }));
       dispatch({
         type: DELETE_MOVIE,
         payload: id
@@ -33,10 +35,21 @@ export const addMovie = movie => dispatch => {
   axios
     .post("/api/movies/", movie)
     .then(res => {
+      dispatch(createMessage({ addMovie: "Movie Added" }));
       dispatch({
         type: ADD_MOVIE,
         payload: res.data
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const errors = {
+        msg: err.response.data,
+        status: err.response.status
+      };
+      console.log(err.response.data);
+      dispatch({
+        type: GET_ERRORS,
+        payload: errors
+      });
+    });
 };

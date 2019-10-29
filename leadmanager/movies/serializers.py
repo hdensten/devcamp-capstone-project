@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from movies.models import Lead
+from movies.models import Movie
 
-# Lead Serializer
+# Movie Serializer
 
 
-class LeadSerializer(serializers.ModelSerializer):
+class MovieSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Lead
+        model = Movie
         fields = '__all__'
