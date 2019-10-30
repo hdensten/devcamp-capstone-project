@@ -1,12 +1,13 @@
 import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
+import { tokenConfig } from "./auth";
 
-import { GET_MOVIES, DELETE_MOVIE, ADD_MOVIE, GET_ERRORS } from "./types";
+import { GET_MOVIES, DELETE_MOVIE, ADD_MOVIE } from "./types";
 
 // GET MOVIES
-export const getMovies = () => dispatch => {
+export const getMovies = () => (dispatch, getState) => {
   axios
-    .get("/api/movies/")
+    .get("/api/movies/", tokenConfig(getState))
     .then(res => {
       dispatch({
         type: GET_MOVIES,
@@ -19,9 +20,9 @@ export const getMovies = () => dispatch => {
 };
 
 // DELETE MOVIE
-export const deleteMovie = id => dispatch => {
+export const deleteMovie = id => (dispatch, getState) => {
   axios
-    .delete(`/api/movies/${id}/`)
+    .delete(`/api/movies/${id}/`, tokenConfig(getState))
     .then(res => {
       dispatch(createMessage({ deleteMovie: "Movie Deleted" }));
       dispatch({
@@ -33,9 +34,9 @@ export const deleteMovie = id => dispatch => {
 };
 
 // ADD MOVIE
-export const addMovie = movie => dispatch => {
+export const addMovie = movie => (dispatch, getState) => {
   axios
-    .post("/api/movies/", movie)
+    .post("/api/movies/", movie, tokenConfig(getState))
     .then(res => {
       dispatch(createMessage({ addMovie: "Movie Added" }));
       dispatch({
